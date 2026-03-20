@@ -1,0 +1,13 @@
+{
+  "name": "markgrab",
+  "description": "Universal web content extraction — convert any URL or document to LLM-ready markdown. Supports HTML, YouTube transcripts, PDF, and DOCX with auto-fallback and content density filtering.",
+  "version": "0.1.1",
+  "author": {
+    "name": "QuartzUnit",
+    "url": "https://github.com/QuartzUnit"
+  },
+  "homepage": "https://github.com/QuartzUnit/markgrab",
+  "repository": "https://github.com/QuartzUnit/markgrab",
+  "license": "MIT",
+  "keywords": ["content-extraction", "markdown", "web-scraping", "llm", "rag", "pdf", "youtube"]
+}

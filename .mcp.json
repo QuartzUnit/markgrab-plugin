@@ -1,0 +1,8 @@
+{
+  "mcpServers": {
+    "markgrab": {
+      "command": "markgrab-mcp",
+      "args": []
+    }
+  }
+}
