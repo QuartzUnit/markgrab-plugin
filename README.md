@@ -31,3 +31,8 @@ pip install "markgrab[all]"   # all content types
 - [PyPI](https://pypi.org/project/markgrab/)
 - [GitHub](https://github.com/QuartzUnit/markgrab)
 - [Documentation](https://github.com/QuartzUnit/markgrab#readme)
+
+
+---
+
+<sub>Part of the [QuartzUnit](https://github.com/QuartzUnit) ecosystem — composable Python libraries for data collection, extraction, search, and AI agent safety.</sub>
