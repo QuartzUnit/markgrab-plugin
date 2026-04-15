@@ -1,5 +1,7 @@
 # MarkGrab Plugin for Claude Code
 
+> [llms.txt](llms.txt)
+
 Universal web content extraction — any URL to LLM-ready markdown.
 
 ## Skills

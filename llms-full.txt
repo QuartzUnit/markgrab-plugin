@@ -1,0 +1,122 @@
+# markgrab-plugin
+> Claude Code plugin for universal web content extraction — any URL to LLM-ready markdown
+
+Wraps [markgrab](https://github.com/QuartzUnit/markgrab) as Claude Code skills + MCP server.
+Install: `pip install markgrab` (core) | `pip install "markgrab[all]"` (all extractors)
+
+## Skills
+
+### `extract-url`
+Extract content from a web URL and convert to LLM-ready markdown.
+
+**Supported content types** (auto-detected from URL):
+- HTML pages — content density filtering, auto-fallback to Playwright for JS-heavy sites
+- YouTube — transcript extraction with timestamps, multi-language
+- PDF — text extraction with page structure
+- DOCX — paragraph and heading extraction
+
+**Command:**
+```bash
+python -m markgrab <URL> [OPTIONS]
+```
+| option | description |
+|--------|-------------|
+| `--format` | Output: `markdown` (default), `text`, `json` |
+| `--browser` | Force Playwright rendering |
+| `--max-chars N` | Limit output length (default: 30000) |
+| `--stealth` | Anti-bot stealth scripts (browser only) |
+
+### `extract-file`
+Convert local PDF or DOCX files to clean markdown.
+
+**Supported file types:**
+- PDF — requires `markgrab[pdf]`
+- DOCX — requires `markgrab[docx]`
+
+**Command:**
+```bash
+python -m markgrab <FILE_PATH> [OPTIONS]
+```
+| option | description |
+|--------|-------------|
+| `--format` | Output: `markdown` (default), `text`, `json` |
+| `--max-chars N` | Limit output length (default: 50000) |
+
+### `batch-extract`
+Extract content from multiple URLs at once.
+
+**Python API:**
+```python
+import asyncio
+from markgrab import extract
+
+async def batch_extract(urls: list[str]) -> list:
+    results = []
+    for url in urls:
+        try:
+            result = await extract(url, max_chars=30_000)
+            results.append({
+                "url": url,
+                "title": result.title,
+                "markdown": result.markdown,
+                "word_count": result.word_count
+            })
+        except Exception as e:
+            results.append({"url": url, "error": str(e)})
+    return results
+```
+
+## MCP Server
+
+Configuration (`.mcp.json`):
+```json
+{
+  "mcpServers": {
+    "markgrab": {
+      "command": "markgrab-mcp",
+      "args": []
+    }
+  }
+}
+```
+
+**MCP Tools:**
+- `extract_url` — Extract single URL to markdown
+- `extract_multiple` — Batch extract multiple URLs
+
+## Plugin Configuration
+
+`.claude-plugin/plugin.json`:
+```json
+{
+  "name": "markgrab",
+  "version": "0.1.1",
+  "author": "QuartzUnit",
+  "license": "MIT",
+  "repository": "https://github.com/QuartzUnit/markgrab"
+}
+```
+
+## markgrab Python API Reference
+
+```python
+async def extract(url: str, *, engine=None, max_chars: int = 50_000,
+                  use_browser: bool = False, stealth: bool = False,
+                  timeout: float = 30.0, proxy: str | None = None,
+                  locale: str | None = None,
+                  browser_fallback: bool = True) -> ExtractResult
+```
+
+```python
+@dataclass
+class ExtractResult:
+    title: str
+    text: str
+    markdown: str
+    word_count: int
+    language: str | None
+    url: str
+    extracted_at: str
+    engine_used: str
+    metadata: dict
+```

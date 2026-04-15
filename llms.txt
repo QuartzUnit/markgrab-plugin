@@ -1,0 +1,8 @@
+# markgrab-plugin
+> Claude Code plugin for universal web content extraction — any URL to LLM-ready markdown
+- Wraps the [markgrab](https://github.com/QuartzUnit/markgrab) Python library as 3 Claude Code skills
+- `pip install markgrab` (core) | `pip install "markgrab[all]"` (full)
+- Skills: `extract-url` (HTML/YouTube/PDF), `extract-file` (local PDF/DOCX), `batch-extract` (bulk URLs)
+- Auto-detects content type, Playwright fallback for JS-heavy pages
+- MCP server: `markgrab-mcp` with `extract_url`, `extract_multiple` tools
+- [Docs](https://github.com/QuartzUnit/markgrab-plugin) | [markgrab PyPI](https://pypi.org/project/markgrab/) | [Full API](llms-full.txt)
